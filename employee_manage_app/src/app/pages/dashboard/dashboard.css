@@ -1,0 +1,18 @@
+.dashboard-card {
+    border-radius: 12px;
+}
+
+.feature-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.feature-list li {
+    padding: 10px;
+    font-size: 16px;
+    border-bottom: 1px solid #eee;
+}
+
+.feature-list li i {
+    margin-right: 10px;
+}

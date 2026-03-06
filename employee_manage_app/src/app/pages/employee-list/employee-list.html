@@ -1,0 +1,86 @@
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Employee List</h5>
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-bordered table-striped table-hover">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Department</th>
+                        <th>Designation</th>
+                        <!-- <th>City</th> -->
+                        <th>State</th>
+                        <th>Pincode</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @if(employeeList().length === 0){
+                    <tr>
+                        <td colspan="11" class="text-center text-muted">
+                            No Employees Found
+                        </td>
+                    </tr>
+                    }
+
+                    @for(item of employeeList(); track $index){
+
+                    <tr>
+
+                        <td>{{ $index + 1 }}</td>
+
+                        <td>{{ item.name }}</td>
+
+                        <td>{{ item.email }}</td>
+
+                        <td>{{ item.contactNo }}</td>
+
+                        <td>{{ item.departmentName }}</td>
+
+                        <td>{{ item.designationName }}</td>
+
+                        <!-- <td>{{ item.city }}</td> -->
+
+                        <td>{{ item.state }}</td>
+
+                        <td>{{ item.pincode }}</td>
+
+                        <td>
+                            <span class="badge bg-info text-dark">
+                                {{ item.role }}
+                            </span>
+                        </td>
+
+                        <td>
+                            <div class="d-flex gap-2">
+                                <button [routerLink]="['/new-employee', item.employeeId]" class="btn btn-sm btn-warning">Edit</button>
+                                <button class="btn btn-sm btn-danger">Delete</button>
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

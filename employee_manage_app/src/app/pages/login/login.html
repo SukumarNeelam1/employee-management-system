@@ -1,0 +1,53 @@
+<div class="parent">
+    <div class="login-container">
+        <div class="card login-card p-4">
+
+            <!-- Title -->
+            <div class="text-center mb-4">
+                <h3 class="fw-bold">Employee Login</h3>
+                <p class="text-muted">Please enter your credentials</p>
+            </div>
+
+            <!-- Login Form -->
+            <form>
+
+                <!-- Email -->
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" [(ngModel)]="loginObj.email" name="email" class="form-control"
+                        placeholder="Enter your email" required>
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                    <label class="form-label">Contact No</label>
+                    <input type="password" [(ngModel)]="loginObj.contactNo" name="contactNo" class="form-control"
+                        placeholder="Enter your password" required>
+                </div>
+
+                <!-- Remember + Forgot -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <!-- <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="rememberMe">
+                        <label class="form-check-label" for="rememberMe">
+                            Remember me
+                        </label>
+                    </div> -->
+                    <a href="#" class="text-decoration-none">Forgot Password?</a>
+                </div>
+
+                <!-- Login Button -->
+                <button type="button" (click)="onLogin()" class="btn btn-primary w-100 btn-login">
+                    <i class="fa-solid fa-right-to-bracket me-1"></i> Login
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="login-footer pt-3">
+            © 2025 Employee Management System
+        </div>
+    </div>
+</div>

@@ -1,0 +1,100 @@
+<div class="container mt-4">
+
+    <div class="card shadow-sm">
+
+        <!-- Card Header -->
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Designation Management</h5>
+        </div>
+
+        <div class="card-body">
+
+            <!-- Form -->
+            <form [formGroup]="designationForm">
+
+                <!-- Form Row -->
+                <div class="row align-items-end mb-4">
+
+                    <!-- Department -->
+                    <div class="col-3">
+                        <label class="form-label">Department</label>
+
+                        <select formControlName="departmentId" class="form-select">
+
+                            <option [ngValue]="null" disabled>Select Department</option>
+
+                            @for (item of departmentList; track item.departmentId) {
+                            <option [ngValue]="item.departmentId">
+                                {{item.departmentName}}
+                            </option>
+                            }
+
+                        </select>
+                    </div>
+
+                    <!-- Designation -->
+                    <div class="col-3">
+                        <label class="form-label">Designation Name</label>
+
+                        <input type="text" formControlName="designationName" class="form-control"
+                            placeholder="Enter designation name">
+                    </div>
+
+                    <!-- Save -->
+                    <div class="col-2">
+                        <button type="button" (click)="onSave()" class="btn w-100"
+                            [ngClass]="designationForm.value.designationId == 0 ? 'btn-success' : 'btn-warning'">
+
+                            {{ designationForm.value.designationId == 0 ? 'Save' : 'Update' }}
+
+                        </button>
+                    </div>
+
+                    <!-- Reset -->
+                    <div class="col-2">
+                        <button type="button" (click)="onReset()" class="btn btn-secondary w-100">
+                            Reset
+                        </button>
+                    </div>
+
+                </div>
+
+            </form>
+
+            <!-- Table -->
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover">
+
+                    <thead class="table-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Department</th>
+                            <th>Designation Name</th>
+                            <th style="width:150px">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (item of designationList; track item.designationId) {
+                        <tr>
+                            <td>{{$index + 1}}</td>
+                            <td>{{item.departmentName}}</td>
+                            <td>{{item.designationName}}</td>
+                            <td>
+                                <button class="btn btn-warning btn-sm me-2" (click)="onEdit(item)">Edit</button>
+                                <button class="btn btn-danger btn-sm"
+                                    (click)="onDelete(item.designationId)">Delete</button>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

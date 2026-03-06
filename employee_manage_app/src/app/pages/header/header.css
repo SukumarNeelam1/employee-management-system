@@ -1,0 +1,117 @@
+.layout {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: #1e2a38;
+  color: white;
+  transition: 0.3s;
+  position: fixed;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  overflow-x: hidden;
+  /* prevents text overflow when collapsing */
+}
+
+.sidebar.collapsed {
+  width: 80px;
+}
+
+/* Sidebar header */
+.sidebar-header {
+  background: #1976d2;
+  padding: 15px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 18px;
+}
+
+/* When collapsed reduce header spacing */
+.sidebar.collapsed .sidebar-header {
+  padding: 15px 5px;
+  font-size: 16px;
+}
+
+/* Navigation */
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-list li {
+  padding: 12px 20px;
+  transition: background 0.2s;
+}
+
+/* Links */
+.nav-list li a {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Icon size fix */
+.nav-list li a i {
+  font-size: 18px;
+  width: 25px;
+  text-align: center;
+}
+
+/* Center icons when collapsed */
+.sidebar.collapsed .nav-list li {
+  padding: 12px 0;
+}
+
+.sidebar.collapsed .nav-list li a {
+  justify-content: center;
+}
+
+/* Hover effect */
+.nav-list li:hover {
+  background-color: #2d3e50;
+}
+
+/* Main content */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 250px;
+  transition: margin-left 0.3s;
+}
+
+/* Adjust main when sidebar collapses */
+.sidebar.collapsed~.main {
+  margin-left: 80px;
+}
+
+/* Topbar */
+.topbar {
+  height: 60px;
+  background: white;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.toggle-btn {
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Page content */
+.content {
+  flex: 1;
+  padding: 20px;
+  background-color: #f4f6f9;
+}
