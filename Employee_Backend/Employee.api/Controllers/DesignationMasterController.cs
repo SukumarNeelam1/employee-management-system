@@ -1,4 +1,5 @@
 ﻿using Employee.api.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,6 +42,7 @@ namespace Employee.api.Controllers
         }
 
         // 🔹 GET BY ID
+        [Authorize]
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -60,6 +62,7 @@ namespace Employee.api.Controllers
         }
 
         // 🔹 ADD
+        [Authorize(Roles = "HR")]
         [HttpPost]
         public IActionResult Add([FromBody] Designation model)
         {
@@ -87,6 +90,7 @@ namespace Employee.api.Controllers
         }
 
         // 🔹 UPDATE
+        [Authorize(Roles = "HR")]
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] Designation model)
         {
@@ -111,6 +115,8 @@ namespace Employee.api.Controllers
         }
 
         // 🔹 DELETE
+        // 🔹 DELETE
+        [Authorize(Roles = "HR")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -121,6 +127,11 @@ namespace Employee.api.Controllers
                 if (designation == null)
                     return NotFound("Designation not found");
 
+                bool usedByEmployee = _Context.Employees.Any(e => e.designationId == id);
+
+                if (usedByEmployee)
+                    return BadRequest(new { message = "Cannot delete designation because employees are assigned to it." });
+
                 _Context.Designations.Remove(designation);
                 _Context.SaveChanges();
 
@@ -128,7 +139,7 @@ namespace Employee.api.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new { message = ex.Message });
             }
         }
     }

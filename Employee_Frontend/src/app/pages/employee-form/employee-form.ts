@@ -37,20 +37,49 @@ export class EmployeeForm implements OnInit {
     this.masterSrv.getAllDesignation();
 
   ngOnInit(): void {
-    // debugger;
+
     this.activatedRoute.params.subscribe(params => {
+
       const id = +params['id'];
-      if (id && id !== 0) {
-        this.empService.getEmpById(id).subscribe({
-          next: (result) => {
-            this.newEmployeeObj = { ...result };
-            this.cdr.detectChanges();
-          }
-        });
-      } else {
-        this.newEmployeeObj = new EmployeeModel();
+
+      // HR can open any employee
+      if (this.loggedEmpData.role === 'HR') {
+
+        if (id && id !== 0) {
+
+          this.empService.getEmpById(id).subscribe({
+            next: (result) => {
+              this.newEmployeeObj = { ...result };
+              this.cdr.detectChanges();
+            }
+          });
+
+        } else {
+
+          this.newEmployeeObj = new EmployeeModel();
+
+        }
+
       }
+
+      // User / Employee always load their own profile
+      else {
+
+        if (this.loggedEmpData.employeeId) {
+
+          this.empService.getEmpById(this.loggedEmpData.employeeId).subscribe({
+            next: (result) => {
+              this.newEmployeeObj = { ...result };
+              this.cdr.detectChanges();
+            }
+          });
+
+        }
+
+      }
+
     });
+
   }
 
   onSaveEmp() {
@@ -106,14 +135,12 @@ export class EmployeeForm implements OnInit {
     if (this.newEmployeeObj.employeeId === 0) {
 
       // CREATE EMPLOYEE
-      debugger;
       this.empService.saveEmployee(this.newEmployeeObj).subscribe({
         next: () => {
           alert("Employee Created Successfully");
           this.newEmployeeObj = new EmployeeModel();
         },
         error: (error) => {
-          debugger;
           if (error.status === 400) {
             alert(error.error);
           } else {

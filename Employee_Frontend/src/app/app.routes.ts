@@ -6,6 +6,7 @@ import { EmployeeForm } from './pages/employee-form/employee-form';
 import { Department } from './pages/department/department';
 import { EmployeeList } from './pages/employee-list/employee-list';
 import { Designation } from './pages/designation/designation';
+import { Register } from './register/register';
 
 export const routes: Routes = [{
     path: '',
@@ -15,6 +16,10 @@ export const routes: Routes = [{
 {
     path: 'login',
     component: Login
+},
+{
+    path: 'register',
+    component: Register
 },
 {
     path: '',

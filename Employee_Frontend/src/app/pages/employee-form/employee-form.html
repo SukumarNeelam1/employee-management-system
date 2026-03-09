@@ -1,130 +1,161 @@
-<div class="container mt-4">
+<div class="container-fluid employee-form-wrapper">
 
-    <div class="card shadow">
+    <div class="card employee-card">
 
-        <div class="card-header bg-primary text-white">
+        <div class="card-header employee-header">
             <h4 class="mb-0">Employee Registration</h4>
         </div>
 
         <div class="card-body">
 
-            <!-- ================= BASIC INFORMATION ================= -->
-            <h5 class="mb-3 text-primary">Basic Information</h5>
+            <!-- BASIC INFORMATION -->
+            <div class="form-section">
 
-            <div class="row mb-3">
+                <h5 class="section-title">Basic Information</h5>
 
-                <div class="col-md-4">
-                    <label class="form-label">Employee Name</label>
-                    <input type="text" [disabled]="loggedEmpData.role != 'HR' " name="name" [(ngModel)]="newEmployeeObj.name" class="form-control">
-                </div>
+                <div class="row">
 
-                <div class="col-md-4">
-                    <label class="form-label">Email</label>
-                    <input type="email" name="email" [(ngModel)]="newEmployeeObj.email" class="form-control">
-                </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Employee Name</label>
+                        <input type="text" [disabled]="loggedEmpData.role != 'HR'" name="name"
+                            [(ngModel)]="newEmployeeObj.name" class="form-control">
+                    </div>
 
-                <div class="col-md-4">
-                    <label class="form-label">Role</label>
-                    <select [disabled]="loggedEmpData.role != 'HR'" class="form-select" name="role" [(ngModel)]="newEmployeeObj.role">
+                    <div class="col-md-4">
+                        <label class="form-label">Email</label>
+                        <input type="email" name="email" [(ngModel)]="newEmployeeObj.email" class="form-control">
+                    </div>
 
-                        <option value="" disabled>Select Role</option>
-                        <option value="HR">HR</option>
-                        <option value="User">Employee</option>
+                    <div class="col-md-4">
+                        <label class="form-label">Role</label>
+                        <select class="form-select" [disabled]="loggedEmpData.role != 'HR'" name="role"
+                            [(ngModel)]="newEmployeeObj.role">
 
-                    </select>
-                </div>
+                            <option value="" disabled>Select Role</option>
+                            <option value="HR">HR</option>
+                            <option value="User">Employee</option>
 
-            </div>
+                        </select>
+                    </div>
 
-
-            <!-- ================= CONTACT INFORMATION ================= -->
-            <h5 class="mt-4 mb-3 text-primary">Contact Information</h5>
-
-            <div class="row mb-3">
-
-                <div class="col-md-4">
-                    <label class="form-label">Contact Number</label>
-                    <input type="text" name="contactNo" [(ngModel)]="newEmployeeObj.contactNo" class="form-control">
-                </div>
-
-                <div class="col-md-4">
-                    <label class="form-label">Alternate Contact</label>
-                    <input type="text" name="altContactNo" [(ngModel)]="newEmployeeObj.altContactNo"
-                        class="form-control">
                 </div>
 
             </div>
 
 
-            <!-- ================= ADDRESS INFORMATION ================= -->
-            <h5 class="mt-4 mb-3 text-primary">Address Information</h5>
+            <!-- CONTACT INFORMATION -->
 
-            <div class="row mb-3">
+            <div class="form-section">
 
-                <div class="col-md-4">
-                    <label class="form-label">City</label>
-                    <input type="text" name="city" [(ngModel)]="newEmployeeObj.city" class="form-control">
-                </div>
+                <h5 class="section-title">Contact Information</h5>
 
-                <div class="col-md-4">
-                    <label class="form-label">State</label>
-                    <input type="text" name="state" [(ngModel)]="newEmployeeObj.state" class="form-control">
-                </div>
+                <div class="row">
 
-                <div class="col-md-4">
-                    <label class="form-label">Pincode</label>
-                    <input type="text" name="pincode" [(ngModel)]="newEmployeeObj.pincode" class="form-control">
-                </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Contact Number</label>
+                        <input type="text" name="contactNo" [(ngModel)]="newEmployeeObj.contactNo" class="form-control">
+                    </div>
 
-            </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Alternate Contact</label>
+                        <input type="text" name="altContactNo" [(ngModel)]="newEmployeeObj.altContactNo"
+                            class="form-control">
+                    </div>
 
-            <div class="row mb-3">
-
-                <div class="col-md-12">
-                    <label class="form-label">Address</label>
-                    <textarea name="address" [(ngModel)]="newEmployeeObj.address" class="form-control"
-                        rows="3"></textarea>
                 </div>
 
             </div>
 
 
-            <!-- ================= JOB INFORMATION ================= -->
-            <h5 class="mt-4 mb-3 text-primary">Job Information</h5>
+            <!-- ADDRESS INFORMATION -->
 
-            <div class="row mb-3">
+            <div class="form-section">
 
-                <div class="col-md-4">
-                    <label class="form-label">Designation</label>
-                    <select [disabled]="loggedEmpData.role != 'HR' " class="form-select" name="designationId" [(ngModel)]="newEmployeeObj.designationId">
+                <h5 class="section-title">Address Information</h5>
 
-                        <option value="" disabled>Select Designation</option>
+                <div class="row">
 
-                        @for (item of $designationList | async; track $index) {
-                        <option [value]="item.designationId">
-                            {{item.departmentName}} - {{item.designationName}}
-                        </option>
-                        }
+                    <div class="col-md-4">
+                        <label class="form-label">City</label>
+                        <input type="text" name="city" [(ngModel)]="newEmployeeObj.city" class="form-control">
+                    </div>
 
-                    </select>
+                    <div class="col-md-4">
+                        <label class="form-label">State</label>
+                        <input type="text" name="state" [(ngModel)]="newEmployeeObj.state" class="form-control">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Pincode</label>
+                        <input type="text" name="pincode" [(ngModel)]="newEmployeeObj.pincode" class="form-control">
+                    </div>
+
+                </div>
+
+                <div class="row mt-2">
+
+                    <div class="col-md-12">
+                        <label class="form-label">Address</label>
+                        <textarea name="address" rows="2" [(ngModel)]="newEmployeeObj.address"
+                            class="form-control"></textarea>
+                    </div>
+
                 </div>
 
             </div>
 
-            <!-- ================= BUTTONS ================= -->
 
-            <div class="text-end mt-4">
+            <!-- JOB INFORMATION -->
+
+            <div class="form-section">
+
+                <h5 class="section-title">Job Information</h5>
+
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <label class="form-label">Designation</label>
+
+                        <select class="form-select" [disabled]="loggedEmpData.role != 'HR'" name="designationId"
+                            [(ngModel)]="newEmployeeObj.designationId">
+
+                            <option value="" disabled>Select Designation</option>
+
+                            @for (item of $designationList | async; track $index) {
+
+                            <option [value]="item.designationId">
+                                {{item.departmentName}} - {{item.designationName}}
+                            </option>
+
+                            }
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="form-buttons">
 
                 @if (newEmployeeObj.employeeId == 0) {
-                <button class="btn btn-success me-2" type="button" (click)="onSaveEmp()">
+
+                <button class="btn btn-success" type="button" (click)="onSaveEmp()">
                     Save Employee
                 </button>
-                }
-                @else {
-                <button class="btn btn-warning me-2" type="button" (click)="onSaveEmp()">
+
+                }@else{
+
+                <button class="btn btn-warning" type="button" (click)="onSaveEmp()">
                     Update Employee
                 </button>
+
                 }
+
                 <button class="btn btn-secondary">
                     Cancel
                 </button>
@@ -136,4 +167,3 @@
     </div>
 
 </div>
-```

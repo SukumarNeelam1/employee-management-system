@@ -1,0 +1,112 @@
+/* ================= WRAPPER ================= */
+
+.designation-wrapper {
+    padding: 25px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+/* ================= CARD ================= */
+
+.designation-card {
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.designation-header {
+    background: #2563eb;
+    color: white;
+    padding: 16px 24px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* ================= BODY ================= */
+
+.designation-body {
+    padding: 25px;
+}
+
+/* ================= FORM ================= */
+
+.form-label {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.form-control,
+.form-select {
+    height: 42px;
+    font-size: 15px;
+    border-radius: 8px;
+}
+
+.form-section {
+    margin-bottom: 22px;
+}
+
+/* ================= BUTTONS ================= */
+
+.button-group {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+}
+
+.button-group .btn {
+    min-width: 110px;
+    height: 42px;
+    font-size: 15px;
+}
+
+/* ================= TABLE ================= */
+
+.table-container {
+    margin-top: 20px;
+}
+
+.table {
+    width: 100%;
+}
+
+.table th,
+.table td {
+    font-size: 15px;
+    padding: 12px;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width:768px) {
+
+    .designation-wrapper {
+        padding: 14px;
+    }
+
+    .designation-body {
+        padding: 18px;
+    }
+
+    .button-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .button-group .btn {
+        width: 100%;
+    }
+
+    .table th,
+    .table td {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+}

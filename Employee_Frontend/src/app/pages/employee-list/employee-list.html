@@ -1,86 +1,136 @@
-<div class="container mt-4">
+<div class="employee-container">
 
-    <div class="card shadow">
+  <div class="card employee-card">
 
-        <div class="card-header bg-primary text-white">
-            <h5 class="mb-0">Employee List</h5>
+    <div class="card-header employee-header">
+      Employee List
+    </div>
+
+    <div class="card-body">
+
+      <!-- DESKTOP TABLE -->
+
+      <div class="table-responsive desktop-table">
+
+        <table class="employee-table">
+
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Contact</th>
+              <th>Department</th>
+              <th>Designation</th>
+              <th>State</th>
+              <th>Pincode</th>
+              <th>Role</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            @if(employeeList().length === 0){
+              <tr>
+                <td colspan="10">No Employees Found</td>
+              </tr>
+            }
+
+            @for(item of employeeList(); track $index){
+
+              <tr>
+                <td>{{ $index + 1 }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.email }}</td>
+                <td>{{ item.contactNo }}</td>
+                <td>{{ item.departmentName }}</td>
+                <td>{{ item.designationName }}</td>
+                <td>{{ item.state }}</td>
+                <td>{{ item.pincode }}</td>
+
+                <td>
+                  <span class="role-badge">
+                    {{ item.role }}
+                  </span>
+                </td>
+
+                <td>
+                  <div class="action-buttons">
+                    <button
+                      [routerLink]="['/new-employee', item.employeeId]"
+                      class="btn-edit">
+                      Edit
+                    </button>
+
+                    <button class="btn-delete">
+                      Delete
+                    </button>
+                  </div>
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <!-- MOBILE CARDS -->
+
+      <div class="mobile-cards">
+
+        @for(item of employeeList(); track $index){
+
+        <div class="employee-mobile-card">
+
+          <div class="emp-name">
+            {{item.name}}
+            <span class="role-badge">{{item.role}}</span>
+          </div>
+
+          <div class="emp-info">
+            <strong>Email:</strong> {{item.email}}
+          </div>
+
+          <div class="emp-info">
+            <strong>Contact:</strong> {{item.contactNo}}
+          </div>
+
+          <div class="emp-info">
+            <strong>Department:</strong> {{item.departmentName}}
+          </div>
+
+          <div class="emp-info">
+            <strong>Designation:</strong> {{item.designationName}}
+          </div>
+
+          <div class="mobile-actions">
+
+            <button
+              [routerLink]="['/new-employee', item.employeeId]"
+              class="btn-edit">
+              Edit
+            </button>
+
+            <button class="btn-delete">
+              Delete
+            </button>
+
+          </div>
+
         </div>
 
-        <div class="card-body">
+        }
 
-            <table class="table table-bordered table-striped table-hover">
-
-                <thead class="table-dark">
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Contact</th>
-                        <th>Department</th>
-                        <th>Designation</th>
-                        <!-- <th>City</th> -->
-                        <th>State</th>
-                        <th>Pincode</th>
-                        <th>Role</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    @if(employeeList().length === 0){
-                    <tr>
-                        <td colspan="11" class="text-center text-muted">
-                            No Employees Found
-                        </td>
-                    </tr>
-                    }
-
-                    @for(item of employeeList(); track $index){
-
-                    <tr>
-
-                        <td>{{ $index + 1 }}</td>
-
-                        <td>{{ item.name }}</td>
-
-                        <td>{{ item.email }}</td>
-
-                        <td>{{ item.contactNo }}</td>
-
-                        <td>{{ item.departmentName }}</td>
-
-                        <td>{{ item.designationName }}</td>
-
-                        <!-- <td>{{ item.city }}</td> -->
-
-                        <td>{{ item.state }}</td>
-
-                        <td>{{ item.pincode }}</td>
-
-                        <td>
-                            <span class="badge bg-info text-dark">
-                                {{ item.role }}
-                            </span>
-                        </td>
-
-                        <td>
-                            <div class="d-flex gap-2">
-                                <button [routerLink]="['/new-employee', item.employeeId]" class="btn btn-sm btn-warning">Edit</button>
-                                <button class="btn btn-sm btn-danger">Delete</button>
-                            </div>
-                        </td>
-
-                    </tr>
-
-                    }
-
-                </tbody>
-
-            </table>
-
-        </div>
+      </div>
 
     </div>
+
+  </div>
 
 </div>

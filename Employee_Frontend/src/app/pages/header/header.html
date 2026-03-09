@@ -1,105 +1,120 @@
 <div class="layout">
 
-  <!-- Sidebar -->
-  <div class="sidebar" [class.collapsed]="isCollapsed">
+  <!-- SIDEBAR -->
+
+  <div class="sidebar"
+       [class.collapsed]="isCollapsed"
+       [class.mobile-open]="isMobileOpen">
 
     <div class="sidebar-header">
       ADMIN
     </div>
 
-    @if (loggedEmpData.role == 'HR') {
     <ul class="nav-list">
 
-      <li>
-        <a routerLink="/dashboard">
-          <i class="fa fa-tachometer-alt"></i>
-          @if (!isCollapsed) { <span>Dashboard</span> }
-        </a>
-      </li>
+  <!-- DASHBOARD (ALL) -->
+  <li>
+    <a routerLink="/dashboard"
+       routerLinkActive="active-link"
+       (click)="closeMobileSidebar()">
+      <i class="fa fa-tachometer-alt"></i>
+      <span>Dashboard</span>
+    </a>
+  </li>
 
-      <li>
-        <a routerLink="/new-employee/0">
-          <i class="fa fa-users"></i>
-          @if (!isCollapsed) { <span>New Employee</span> }
-        </a>
-      </li>
+  <!-- NEW EMPLOYEE (ALL) -->
+  <li>
+  <a routerLink="/new-employee/0"
+     routerLinkActive="active-link"
+     (click)="closeMobileSidebar()">
 
-      <li>
-        <a routerLink="/employees">
-          <i class="fa fa-users"></i>
-          @if (!isCollapsed) { <span>Employees</span> }
-        </a>
-      </li>
+    <i class="fa fa-user-plus"></i>
 
-      <li>
-        <a routerLink="/department">
-          <i class="fa fa-building"></i>
-          @if (!isCollapsed) { <span>Departments</span> }
-        </a>
-      </li>
+    <span>
+      @if(loggedEmpData.role === 'HR'){
+        New Employee
+      } @else {
+        My Profile
+      }
+    </span>
 
-      <li>
-        <a routerLink="/designation">
-          <i class="fa fa-id-badge"></i>
-          @if (!isCollapsed) { <span>Designations</span> }
-        </a>
-      </li>
+  </a>
+</li>
 
-      <li>
-        <a routerLink="/reports">
-          <i class="fa fa-file-alt"></i>
-          @if (!isCollapsed) { <span>Reports</span> }
-        </a>
-      </li>
+  <!-- HR ONLY MENU -->
+  @if(isHR){
 
-      <li>
-        <a routerLink="/settings">
-          <i class="fa fa-cog"></i>
-          @if (!isCollapsed) { <span>Settings</span> }
-        </a>
-      </li>
+  <li>
+    <a routerLink="/employees"
+       routerLinkActive="active-link"
+       (click)="closeMobileSidebar()">
+      <i class="fa fa-users"></i>
+      <span>Employees</span>
+    </a>
+  </li>
 
-      <li>
-        <a (click)="onLogOut()">
-          <i class="fa fa-sign-out-alt"></i>
-          @if (!isCollapsed) { <span>Logout</span> }
-        </a>
-      </li>
+  <li>
+    <a routerLink="/department"
+       routerLinkActive="active-link"
+       (click)="closeMobileSidebar()">
+      <i class="fa fa-building"></i>
+      <span>Departments</span>
+    </a>
+  </li>
 
-    </ul>
+  <li>
+    <a routerLink="/designation"
+       routerLinkActive="active-link"
+       (click)="closeMobileSidebar()">
+      <i class="fa fa-id-badge"></i>
+      <span>Designations</span>
+    </a>
+  </li>
 
-    }
-    @else {
-    <ul class="nav-list">
-      <li>
-        <a routerLink="/new-employee/0">
-          <i class="fa fa-users"></i>
-          @if (!isCollapsed) { <span>New Employee</span> }
-        </a>
-      </li>
+  <!-- <li>
+    <a routerLink="/reports"
+       routerLinkActive="active-link"
+       (click)="closeMobileSidebar()">
+      <i class="fa fa-file-alt"></i>
+      <span>Reports</span>
+    </a>
+  </li>
 
-      <li>
-        <a routerLink="/settings">
-          <i class="fa fa-cog"></i>
-          @if (!isCollapsed) { <span>Settings</span> }
-        </a>
-      </li>
+  <li>
+    <a routerLink="/settings"
+       routerLinkActive="active-link"
+       (click)="closeMobileSidebar()">
+      <i class="fa fa-cog"></i>
+      <span>Settings</span>
+    </a>
+  </li> -->
 
-      <li>
-        <a (click)="onLogOut()">
-          <i class="fa fa-sign-out-alt"></i>
-          @if (!isCollapsed) { <span>Logout</span> }
-        </a>
-      </li>
-    </ul>
-    }
+  }
 
+  <!-- LOGOUT (ALL) -->
+  <li>
+    <a (click)="closeMobileSidebar(); onLogOut()">
+      <i class="fa fa-sign-out-alt"></i>
+      <span>Logout</span>
+    </a>
+  </li>
+
+</ul>
   </div>
 
-  <!-- Main Section -->
+  <!-- ⭐ MOBILE OVERLAY -->
+
+  @if (isMobileOpen) {
+  <div
+    class="mobile-overlay"
+    (click)="closeMobileSidebar()">
+  </div>
+}
+
+  <!-- MAIN -->
+
   <div class="main">
 
-    <!-- Top Navbar -->
     <div class="topbar">
 
       <button class="toggle-btn" (click)="toggleSidebar()">

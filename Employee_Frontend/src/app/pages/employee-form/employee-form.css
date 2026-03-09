@@ -1,0 +1,183 @@
+/* ================= WRAPPER ================= */
+
+.employee-form-wrapper{
+    padding:15px;
+    max-width:900px;
+    margin:auto;
+}
+
+
+/* ================= CARD ================= */
+
+.employee-card{
+    border-radius:10px;
+    border:none;
+    box-shadow:0 4px 14px rgba(0,0,0,0.08);
+}
+
+.employee-header{
+    background:#2563eb;
+    color:white;
+    padding:14px 20px;
+    font-size:18px;
+    font-weight:600;
+}
+
+
+/* ================= BODY ================= */
+
+.card-body{
+    padding:20px;
+}
+
+
+/* ================= FORM SECTIONS ================= */
+
+.form-section{
+    margin-bottom:20px;
+}
+
+.section-title{
+    font-size:15px;
+    font-weight:600;
+    color:#2563eb;
+    border-left:3px solid #2563eb;
+    padding-left:8px;
+    margin-bottom:10px;
+}
+
+
+/* ================= LABEL ================= */
+
+.form-label{
+    font-size:13px;
+    font-weight:500;
+    margin-bottom:4px;
+}
+
+
+/* ================= INPUT ================= */
+
+.form-control,
+.form-select{
+    height:36px;
+    font-size:13px;
+    border-radius:6px;
+    border:1px solid #d1d5db;
+    padding:6px 10px;
+}
+
+textarea.form-control{
+    height:auto;
+}
+
+
+/* ================= INPUT FOCUS ================= */
+
+.form-control:focus,
+.form-select:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 0 0.08rem rgba(37,99,235,0.25);
+}
+
+
+/* ================= ROW SPACING ================= */
+
+.row{
+    row-gap:10px;
+}
+
+
+/* ================= BUTTON AREA ================= */
+
+.form-buttons{
+    display:flex;
+    gap:10px;
+    margin-top:10px;
+}
+
+
+/* ================= BUTTONS ================= */
+
+.btn{
+    padding:7px 14px;
+    font-size:14px;
+    font-weight:500;
+}
+
+.btn-success{
+    background:#16a34a;
+    border:none;
+}
+
+.btn-success:hover{
+    background:#15803d;
+}
+
+.btn-warning{
+    background:#f59e0b;
+    border:none;
+    color:white;
+}
+
+.btn-warning:hover{
+    background:#d97706;
+}
+
+.btn-secondary{
+    background:#6b7280;
+    border:none;
+}
+
+
+/* ================= TABLET ================= */
+
+@media (max-width:992px){
+
+.employee-form-wrapper{
+max-width:100%;
+}
+
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width:768px){
+
+.card-body{
+padding:16px;
+}
+
+.employee-header{
+font-size:17px;
+}
+
+.form-buttons{
+flex-direction:column;
+}
+
+.btn{
+width:100%;
+}
+
+}
+
+
+/* ================= SMALL MOBILE ================= */
+
+@media (max-width:480px){
+
+.employee-form-wrapper{
+padding:10px;
+}
+
+.card-body{
+padding:14px;
+}
+
+.form-label{
+font-size:12px;
+}
+
+}

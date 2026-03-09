@@ -26,7 +26,6 @@ export class Department implements OnInit {
   onSaveDept() {
     this.masterService.saveDept(this.newDepObj).subscribe(({
       next: (result: any) => {
-        debugger;
         alert("Depertment Created Successfully")
         this.getAllDepartments();
 
@@ -37,8 +36,7 @@ export class Department implements OnInit {
         };
       },
       error: (error) => {
-        debugger;
-        alert("Depertment must be Unique")
+        alert(error.error)
       }
     }))
   }

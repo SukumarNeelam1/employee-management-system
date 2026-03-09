@@ -9,9 +9,12 @@ export class EmployeeModel {
   pincode: string;
   altContactNo: string;
   address: string;
+
   designationId: number;
+
   createdDate: Date;
   modifiedDate: Date;
+
   role: string;
 
   constructor(
@@ -45,17 +48,20 @@ export class EmployeeModel {
   }
 }
 
+
 export interface IEmployeeListModel {
 
   employeeId: number;
   name: string;
   email: string;
   contactNo: string;
-  altContactNo : string;
+
+  altContactNo: string;
   city: string;
   state: string;
   pincode: string;
   address: string;
+
   role: string;
 
   designationId: number;
@@ -66,5 +72,4 @@ export interface IEmployeeListModel {
 
   createdDate: Date;
   modifiedDate: Date;
-
 }

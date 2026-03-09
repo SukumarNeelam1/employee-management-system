@@ -1,6 +1,12 @@
 ﻿using Employee.api.Model;
+using Employee.api.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace Employee.api.Controllers
 {
@@ -9,24 +15,30 @@ namespace Employee.api.Controllers
     public class EmployeeMasterController : ControllerBase
     {
         private readonly EmployeeDbContext _Context;
+        private readonly IConfiguration _config;
 
-        public EmployeeMasterController(EmployeeDbContext context)
+        public EmployeeMasterController(EmployeeDbContext context,IConfiguration config)
         {
             _Context = context;
+            _config = config;
         }
 
         // 🔹 GET ALL
+        [Authorize]
         [HttpGet]
         public IActionResult GetAll()
         {
             try
             {
                 var data = (from emp in _Context.Employees
+
                             join des in _Context.Designations
-                            on emp.designationId equals des.designationId
+                            on emp.designationId equals des.designationId into desGroup
+                            from des in desGroup.DefaultIfEmpty()
 
                             join dept in _Context.Departments
-                            on des.departmentId equals dept.departmentId
+                            on des.departmentId equals dept.departmentId into deptGroup
+                            from dept in deptGroup.DefaultIfEmpty()
 
                             select new
                             {
@@ -34,20 +46,12 @@ namespace Employee.api.Controllers
                                 emp.name,
                                 emp.email,
                                 emp.contactNo,
-                                emp.city,
                                 emp.state,
                                 emp.pincode,
-                                emp.address,
                                 emp.role,
 
-                                emp.designationId,
-                                des.designationName,
-
-                                dept.departmentId,
-                                dept.departmentName,
-
-                                emp.createdDate,
-                                emp.modifiedDate
+                                designationName = des != null ? des.designationName : null,
+                                departmentName = dept != null ? dept.departmentName : null
                             }).ToList();
 
                 return Ok(data);
@@ -59,6 +63,7 @@ namespace Employee.api.Controllers
         }
 
         // 🔹 GET BY ID
+        [Authorize]
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -78,52 +83,71 @@ namespace Employee.api.Controllers
         }
 
         // 🔹 ADD
+        [Authorize(Roles = "HR")]
         [HttpPost]
-        public IActionResult Add([FromBody] EmployeeModel emp)
+        public IActionResult Add([FromBody] EmployeeCreateDto dto)
         {
             try
             {
+                if (dto == null)
+                    return BadRequest("Invalid employee data");
+
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                if (emp == null)
-                    return BadRequest("Invalid employee data");
-
-                bool employeeExists = _Context.Employees
-                    .Any(e => e.contactNo == emp.contactNo || e.email == emp.email);
-
-                // Check duplicate contactNo
-                bool contactExists = _Context.Employees
-                    .Any(e => e.contactNo == emp.contactNo);
-
-                if (contactExists)
-                    return BadRequest("Contact number already exists");
-
-                // Check duplicate email
+                // Email duplicate check
                 bool emailExists = _Context.Employees
-                    .Any(e => e.email == emp.email);
-
-                if (employeeExists)
-                    return BadRequest("Employee already exists");
+                    .Any(e => e.email == dto.email);
 
                 if (emailExists)
                     return BadRequest("Email already exists");
 
-                emp.createdDate = DateTime.Now;
-                emp.modifiedDate = DateTime.Now;
+                // Contact number duplicate check (only if provided)
+                if (!string.IsNullOrEmpty(dto.contactNo))
+                {
+                    bool contactExists = _Context.Employees
+                        .Any(e => e.contactNo == dto.contactNo);
+
+                    if (contactExists)
+                        return BadRequest("Contact number already exists");
+                }
+
+                // Convert DTO → Model
+                var emp = new EmployeeModel
+                {
+                    name = dto.name,
+                    email = dto.email,
+                    //passwordHash = dto.password,
+                    contactNo = dto.contactNo,
+                    city = dto.city,
+                    state = dto.state,
+                    pincode = dto.pincode,
+                    altContactNo = dto.altContactNo,
+                    address = dto.address,
+                    designationId = dto.designationId,
+
+                    role = "Employee",
+                    createdDate = DateTime.Now,
+                    modifiedDate = DateTime.Now
+                };
 
                 _Context.Employees.Add(emp);
                 _Context.SaveChanges();
 
-                return Ok(new { message = "Employee Added Successfully" });
+                return Ok(new
+                {
+                    success = true,
+                    message = "Employee Added Successfully"
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, ex.InnerException?.Message ?? ex.Message);
             }
         }
 
         // 🔹 UPDATE
+        [Authorize(Roles ="HR")]
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] EmployeeModel emp)
         {
@@ -147,7 +171,7 @@ namespace Employee.api.Controllers
 
                 _Context.SaveChanges();
 
-                return Ok(new {message ="Employee Updated Successfully" });
+                return Ok(new { message = "Employee Updated Successfully" });
             }
             catch (Exception ex)
             {
@@ -156,6 +180,7 @@ namespace Employee.api.Controllers
         }
 
         // 🔹 DELETE
+        [Authorize(Roles ="HR")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -174,44 +199,6 @@ namespace Employee.api.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
-            }
-        }
-
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginDto model)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
-                // Find user by email
-                var user = await _Context.Employees
-                    .FirstOrDefaultAsync(x => x.email == model.email && x.contactNo == model.contactNo);
-
-                // If user not found
-                if (user == null)
-                    return Unauthorized(new { Message = "Invalid Credentials" });
-
-                // Success response
-                return Ok(new
-                {
-                    message = "Login Successful",
-                    data = new
-                    {
-                        user.employeeId,
-                        user.name,
-                        user.email,
-                        user.contactNo,
-                        user.designationId,
-                        //user.designationName,
-                        user.role
-                    }
-                });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = ex.Message });
             }
         }
     }

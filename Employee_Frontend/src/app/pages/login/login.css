@@ -1,38 +1,109 @@
-.parent {
-            background: linear-gradient(135deg, #4e73df, #1cc88a);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+/* Full page background */
 
-        .login-container {
-            width: 400px;
-        }
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #3b82f6, #22c55e);
+    padding: 20px;
+}
 
-        .login-card {
-            border-radius: 15px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-            animation: fadeIn 0.8s ease-in-out;
-        }
+/* Container */
 
-        .btn-login {
-            background-color: #4e73df;
-            transition: 0.3s ease;
-        }
+.login-container {
+    width: 100%;
+    max-width: 420px;
+}
 
-        .btn-login:hover {
-            background-color: #2e59d9;
-            transform: translateY(-2px);
-        }
+/* Card */
 
-        .login-footer {
-            text-align: center;
-            font-size: 14px;
-            color: #6c757d;
-        }
+.login-card {
+    background: white;
+    border-radius: 14px;
+    padding: 35px 30px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+/* Header */
+
+.login-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.login-header h3 {
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.login-header p {
+    color: #6c757d;
+    font-size: 14px;
+}
+
+/* Inputs */
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+.form-control {
+    height: 45px;
+    border-radius: 8px;
+}
+
+/* Forgot password */
+
+.forgot {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.forgot a {
+    font-size: 14px;
+    text-decoration: none;
+}
+
+/* Login button */
+
+.btn-login {
+    width: 100%;
+    height: 45px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.btn-login:hover {
+    background: #1d4ed8;
+}
+
+/* Register */
+
+.register {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.register a {
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* Footer */
+
+.login-footer {
+    text-align: center;
+    color: white;
+    margin-top: 15px;
+    font-size: 13px;
+}

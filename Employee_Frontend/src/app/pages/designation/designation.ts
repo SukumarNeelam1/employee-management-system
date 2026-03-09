@@ -119,42 +119,27 @@ export class Designation {
     });
 
   }
-
-  // ======================
-  // UPDATE
-  // ======================
-
-  // onUpdate() {
-
-  //   this.masterSrv.UpdateDesignation(this.designationForm.value)
-  //     .subscribe(() => {
-
-  //       alert("Designation Updated");
-
-  //       this.loadDesignations();
-  //       this.onReset();
-
-  //     });
-
-  // }
-
-  // ======================
-  // DELETE
-  // ======================
-
   onDelete(id: number) {
 
     if (!confirm("Delete this designation?")) return;
 
     this.masterSrv.DeleteDesignationById(id)
-      .subscribe(() => {
+      .subscribe({
+        next: (res: any) => {
 
-        alert("Deleted");
+          alert(res.message);   // show API success message
+          this.loadDesignations();
 
-        this.loadDesignations();
-        this.cdr.detectChanges();
+        },
+        error: (err) => {
 
+          const message = err?.error?.message || err?.error || "Delete failed";
+
+          alert(message);
+
+        }
       });
+
   }
 
   // ======================
